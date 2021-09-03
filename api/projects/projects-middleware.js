@@ -26,13 +26,24 @@ async function validateProjectId(req, res, next) {
     }
     next()
 }
-
+// `[POST] /api/projects`
+  //- Returns the newly created project as the body of the response.
+ // - If the request body is missing any of the required fields it responds with a status code 400.
+//[ ] `[PUT] /api/projects/:id`
+  //- Returns the updated project as the body of the response.
+  //- If there is no project with the given `id` it responds with a status code 404.
+  //- If the request body is missing any of the required fields it responds with a status code 400.
 function validateProject (req, res, next) {
     const {name, description } = req.body
-    if(!name || !description){
-        res.status(404).json({
+    console.log('h',name, description)    
+    if(!name || !description || name.trim() || description.trim()){
+        res.status(400).json({
             message: "Please provide name and description"
         })
+    } else{
+        req.name = name.trim()
+        req.description = description.trim()
+        next()
     }
 }
 
